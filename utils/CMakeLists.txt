@@ -1,0 +1,9 @@
+add_executable(mst_driver)
+target_sources(mst_driver
+    PRIVATE
+    mst_driver.cpp
+)
+target_link_libraries(mst_driver
+    PRIVATE
+    graphy
+)
