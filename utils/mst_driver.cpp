@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
   } else {
     std::cerr << "Using SYCL backend\n";
     sycl::queue q;
-    auto inMST = graphy::syclMST(g, q);
+    auto inMST = graphy::ECL_MST::syclMST(g, q);
     for (int32_t i = 0; i < g.E; ++i) {
       std::cout << std::format("{}\n", inMST[i]);
     }

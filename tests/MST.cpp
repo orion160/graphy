@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
   auto inMST_CPU = graphy::baseline::MST(g);
 
   sycl::queue q;
-  auto inMST_GPU = graphy::syclMST(g, q);
+  auto inMST_GPU = graphy::ECL_MST::syclMST(g, q);
 
   bool match = true;
   for (int i = 0; i < g.E; ++i) {

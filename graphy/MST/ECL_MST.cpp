@@ -3,7 +3,8 @@
 
 #include <graphy/MST/ECL_MST.hpp>
 
-namespace graphy {
+namespace graphy::ECL_MST {
+namespace DS{
 int32_t root(const int32_t node,
              sycl::accessor<int32_t, 1, sycl::access::mode::read> parent) {
   auto root = node;
@@ -28,7 +29,7 @@ void join(int32_t u, int32_t v,
                        sycl::access::address_space::global_space>{parent[M]}
           .compare_exchange_weak(M, m));
 }
-/** ECL MST **/
+}
 struct WorkList {
   int32_t sourceVertex;
   int32_t destinationVertex;
@@ -118,8 +119,8 @@ public:
 
     if (idx < wl1SZ[0]) {
       auto wItem = wl1[idx];
-      const auto u = root(wItem.sourceVertex, parent);
-      const auto v = root(wItem.destinationVertex, parent);
+      const auto u = DS::root(wItem.sourceVertex, parent);
+      const auto v = DS::root(wItem.destinationVertex, parent);
 
       if (u != v) {
         wItem.sourceVertex = u;
@@ -178,7 +179,7 @@ public:
                          static_cast<int64_t>(wItem.edgeID);
       if (value == minv[wItem.sourceVertex] ||
           value == minv[wItem.destinationVertex]) {
-        join(wItem.sourceVertex, wItem.destinationVertex, parent);
+        DS::join(wItem.sourceVertex, wItem.destinationVertex, parent);
         inMST[wItem.edgeID] = true;
       }
     }
